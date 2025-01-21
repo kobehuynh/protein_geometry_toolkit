@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 #Create function to obtain x,y,z coordinates of bounding cuboid given a pdb file and creates a visualization of the 3D bounding cuboid
-#Can set list of amino acids or determine whether alpha carbons are included
+#Can set list of amino acids or determine whether alpha carbons should be included
 
 def get_coord_cuboid(pdb_file, amino_acids=None, use_alpha_carbon = True):
     
