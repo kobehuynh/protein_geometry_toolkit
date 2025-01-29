@@ -25,9 +25,12 @@ a) All the amino acids (and their atoms) fully encapsulated by the cuboid
 b) All amino acids α carbons fully encapsulated by the cuboid   
 c) All amino acids that intersect the cuboid 
 
-For this exercise we will assume that nuclei do not have any volume but they are mere dots.   
+_Assumption: Nuclei do not have any volume and are considered mere dots_
+
 Bonus Task:  
-For a given region encapsulated by the cuboid find the volume of the space that is not occupied by any atoms (here we will assume that nuclei have volume).    
+For a given region encapsulated by the cuboid find the volume of the space that is not occupied by any atoms (here we will assume that nuclei have volume).  
+
+_Here, we assume that nuclei have a finite volume._
 
 ## Acknowledgments  
 Special thanks to Alper Celik for reviewing my work and providing guidance.
