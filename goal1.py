@@ -1,6 +1,16 @@
-#Goal 1:For a given pdb file and a set of amino acids determine the 3D coordinates of a bounding cuboid for  
-#a) Only using the α carbon 
-#b) Using all atoms in the amino acid (aa) 
+"""
+Goal 1:
+Module for computing the 3D coordinates of a bounding cuboid for a given PDB file and a set of amino acids.
+This can be computed using only the alpha carbons or all atoms in the specified residues.
+ 
+This module uses the BioPython package to parse PDB files and compute the bounding cuboid 
+either by only considering alpha carbons or by considering all atoms in specified residues.
+Also, numpy is used to perform the necessary calculations.
+
+Dependencies include:
+-Biopython
+-numpy
+"""
 
 #Import packages
 
@@ -9,18 +19,39 @@ parser = PDBParser(PERMISSIVE=1)
 
 import numpy as np
 
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-
-#Create function to obtain x,y,z coordinates of bounding cuboid given a pdb file and creates a visualization of the 3D bounding cuboid
-#Can set list of amino acids or determine whether alpha carbons should be included
-
 def get_coord_cuboid(pdb_file, amino_acids=None, use_alpha_carbon = True):
-    
+
+    """
+    Compute the coordinates of the 3D bounding cuboid for a set of amino acids in a PDB file
+
+    Parameters:
+    pdb_file: str
+        Path to pdb file to be analyzed.
+
+    amino_acids: list[str], optional, default=None  
+        List of amino acid residue names (3-letter codes, e.g, "ALA", "GLY") to be analyzed.
+        If None, all residues are analyzed.
+
+    use_alpha_carbon: boolean, default=True
+        Whether to use only alpha carbons (Cα) for computing the bounding cuboid.
+        If False, all atoms in the residue will be used.
+
+    Output:
+    Coordinates of the cuboid:
+    -Xmax, Ymax, Zmax: float   
+    -Xmin, Ymin, Zmin: float
+
+    Example:
+    get_coord_cuboid("example.pdb", amino_acids=["ALA", "GLY"], use_alpha_carbon = True)
+    """
+
+    #Load and parse the structure from the PDB file
     structure = parser.get_structure("protein", pdb_file)
 
+    #Initialize an empty list to store the 3D atom coordinates
     coord = []
 
+    #Iterate over the structure (models, chains, residues) to extract the atom coordinates
     for model in structure:
         for chain in model: 
             for residue in chain:
@@ -32,39 +63,13 @@ def get_coord_cuboid(pdb_file, amino_acids=None, use_alpha_carbon = True):
                         else:
                             coord.append(atom.coord)  
 
+    #Convert the list of coordinates to a numpy array for easier manipulation
     coord_numpy = np.array(coord)
 
+    #Compute bounding cuboid dimensions by finding the maximum and minimum coordinates in each dimension
     x_max,y_max,z_max = np.max(coord_numpy, axis=0) 
     x_min,y_min,z_min = np.min(coord_numpy, axis=0)
 
-    vertices = [
-        [x_min, y_min, z_min],  
-        [x_min, y_max, z_min],
-        [x_max, y_max, z_min],
-        [x_max, y_min, z_min],
-        [x_min, y_min, z_max],  
-        [x_min, y_max, z_max],
-        [x_max, y_max, z_max],
-        [x_max, y_min, z_max],
-    ]
-    faces = [
-        [vertices[0], vertices[1], vertices[2], vertices[3]],  
-        [vertices[4], vertices[5], vertices[6], vertices[7]],  
-        [vertices[0], vertices[1], vertices[5], vertices[4]],  
-        [vertices[2], vertices[3], vertices[7], vertices[6]], 
-        [vertices[1], vertices[2], vertices[6], vertices[5]],  
-        [vertices[0], vertices[3], vertices[7], vertices[4]],  
-    ]
-
-    fig = plt.figure()
-    ax = fig.add_subplot(projection="3d")
-    poly3d = Poly3DCollection(faces, alpha=0.3, facecolors = "green", edgecolors = "black")
-    ax.add_collection3d(poly3d)
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Z")
-    ax.set_title("Visualization of 3D Bounding Cuboid")
-    plt.show()
-
+    #Print bounding cuboid coordinates 
     print("Xmax=",x_max,"Ymax=",y_max,"Zmax=",z_max,"Xmin=",x_min,"Ymin=",y_min, "Zmin=",z_min)
     
