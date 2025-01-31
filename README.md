@@ -4,7 +4,7 @@ This repository contains scripts for processing Protein Data Bank (PDB) files to
 
 Dependecies:  
 biopython  
-numpy
+numpy  
 pandas
 
 ## Goals
