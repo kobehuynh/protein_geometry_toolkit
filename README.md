@@ -28,11 +28,6 @@ c) All amino acids that intersect the cuboid
 
 _Assumption: Nuclei do not have any volume and are considered mere dots_
 
-**Bonus Task:** 
-For a given region encapsulated by the cuboid find the volume of the space that is not occupied by any atoms (here we will assume that nuclei have volume).  
-
-_Here, we assume that nuclei have a finite volume._
-
 ## Acknowledgments  
 Special thanks to Alper Celik for reviewing my work and providing guidance.
 
