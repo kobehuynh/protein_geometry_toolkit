@@ -3,9 +3,9 @@
 This repository contains scripts for processing Protein Data Bank (PDB) files to analyze amino acid coordinates and their spatial relationship within bounding cuboids. The toolkit provides uses for various geometric operations on proteins, including finding bounding cuboids, placing fixed cuboids, and analyzing amino acid encapsulation and intersection. 
 
 Dependecies:  
-biopython  
-numpy  
-pandas
+-biopython  
+-numpy  
+-pandas
 
 ## Goals
 
